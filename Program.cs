@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Baldesamo_Franco_Lab_Act_3_1
 {
@@ -21,13 +22,13 @@ namespace Baldesamo_Franco_Lab_Act_3_1
                     string stud_deg = Console.ReadLine();
 
                     Console.Write("Gender: ");
-                    string stud_gen = Console.ReadLine();
+                    string stud_gen = Console.ReadLine().ToUpper();
 
                     Console.Write("Email address: ");
                     string stud_emai = Console.ReadLine();
 
                     //open/creat the file text
-                    FileStream fs = new FileStream("Student.txt", FileMode.Create);
+                    FileStream fs = new FileStream("Student.txt", FileMode.Append);
 
                     //enable you to write in the text
                     StreamWriter sw = new StreamWriter(fs);
@@ -37,6 +38,7 @@ namespace Baldesamo_Franco_Lab_Act_3_1
                     sw.WriteLine("Student Degree: " + stud_deg);
                     sw.WriteLine("Student Gender: " + stud_gen);
                     sw.WriteLine("Student Email Address: " + stud_emai);
+                    sw.WriteLine("------------------------------------\n\n");
 
                     sw.Close();
                     fs.Close();
@@ -66,12 +68,35 @@ namespace Baldesamo_Franco_Lab_Act_3_1
                 //read the file
                 string readText = File.ReadAllText("Student.txt");
                 Console.WriteLine(readText);
-                Console.ReadKey();
+                
                 return 1;
             }
             else if (choice == 3)
             {
+                int countm = 0;
+                int countf = 0;
+                string[] readText = File.ReadAllLines("Student.txt");
+                
+                foreach (string Gender  in readText)
+                {
+                    
+                    if (Gender == "Student Gender: MALE")
+                    {
+                        countm++;
+                    }
+
+                    if (Gender == "Student Gender: FEMALE")
+                    {
+                        countf++;
+                    }
+
+                    
+                }
+                Console.WriteLine("Male counts: {0}", countm);
+                Console.WriteLine("Female counts: {0}", countf);
                 //number of male and female
+
+
                 return 1;
             }
             else if (choice == 4)
@@ -79,7 +104,7 @@ namespace Baldesamo_Franco_Lab_Act_3_1
                 //will close the file
                 Console.WriteLine("Press Any key to exit");
                 Console.ReadKey();
-                return 1;
+                
             }
             return 0;
         }
@@ -113,9 +138,14 @@ namespace Baldesamo_Franco_Lab_Act_3_1
             {
                 Redo();
             }
-           
+            if (answer == "NO")
+            {
                 Console.WriteLine("Enter to exit");
                 Console.ReadKey();
+
+            }
+           
+                
             
 
 
@@ -142,7 +172,7 @@ namespace Baldesamo_Franco_Lab_Act_3_1
                 //will repeat if error
                 UserChoice_2 = Userchoice(UserChoice_1);
             } while (UserChoice_2 == 0);
-            Console.Clear();
+            
             Console.WriteLine("Still want to continue?");
             Console.WriteLine("Type \"YES\" or \"No\" ");
             string answer = Console.ReadLine().ToUpper();
@@ -152,9 +182,14 @@ namespace Baldesamo_Franco_Lab_Act_3_1
             {
                 Redo();
             }
+            if (answer == "NO")
+            {
+                Console.WriteLine("Enter to exit");
+                Console.ReadKey();
 
-            Console.WriteLine("Enter to exit");
-            Console.ReadKey();
+            }
+
+            
 
         }
         public static int Userchoice()
